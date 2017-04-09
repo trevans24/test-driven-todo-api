@@ -75,19 +75,20 @@ app.get('/api/todos/:id', function show(req, res) {
 
 app.put('/api/todos/:id', function update(req, res) {
   var id = req.params.id;
-  for(var i = 0; i < todos.length; i++) {
-    if(todos[i]._id == id){
+  todos.forEach(function(el, index){
+    if (el._id == id){
+      console.log(el._id);
       console.log(id);
       console.log(todos[index]._id);
       // console.log(req.body._id);
       // console.log(todos[index].id);
-      todos[i].task = req.body.task;
-      todos[i].description = req.body.description;
+      todos[index].task = req.body.task;
+      todos[index].description = req.body.description;
       console.log(req.body.task);
       console.log(req.body.description);
       res.json(req.body);
     }
-  }
+  });
 });
 
 app.delete('/api/todos/:id', function destroy(req, res) {
@@ -96,7 +97,7 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * with deleted todo.
    */
   var id = req.params.id-1;
-  res.json(delete todos[id]);
+  res.json(todos.splice([id],1));
   res.end();
 });
 
